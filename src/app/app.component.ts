@@ -8,7 +8,7 @@ import { SignInPage } from './../pages/sign-in/sign-in';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
-import { Jwt } from './../models/Jwt';
+import { OauthInfo } from './../models/OauthInfo';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +16,7 @@ import { Jwt } from './../models/Jwt';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  private rootPage: any = null;
+  public rootPage: any = null;
   public isSignedIn: boolean = false;
   public pages: Array<{title: string, component?: any}>;
 
@@ -29,12 +29,12 @@ export class MyApp {
   ) {
     this.initializeApp();
 
-    this.events.subscribe('user:signInOrOut', (jwt: Jwt) => {
-      this.initializePage(jwt);
+    this.events.subscribe('user:signInOrOut', (oauthInfo: OauthInfo) => {
+      this.initializePage(oauthInfo);
     });
 
-    this.storage.get('jwt').then((jwt: Jwt) => {
-      this.initializePage(jwt);
+    this.storage.get('oauthInfo').then((oauthInfo: OauthInfo) => {
+      this.initializePage(oauthInfo);
     });
   }
 
@@ -47,9 +47,9 @@ export class MyApp {
     });
   }
 
-  initializePage(jwt: Jwt): void {
+  initializePage(oauthInfo: OauthInfo): void {
 
-    if(jwt == null) {
+    if(oauthInfo == null) {
       this.setRootPage(true);
       this.isSignedIn = false;
       this.pages = [
@@ -83,7 +83,7 @@ export class MyApp {
 
   signOut(): void {
     setTimeout(() => {
-      this.storage.remove('jwt').then(() => {
+      this.storage.remove('oauthInfo').then(() => {
         this.events.publish('user:signInOrOut', null);
       }).catch(err => {
         console.log(err);

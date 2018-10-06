@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';
 
+import { EnvVariable } from '../../environments/env-variable';
 import { OauthProvider } from './../../providers/oauth';
 
-import { ReqJwt } from './../../models/ReqJwt';
-import { EnvVariable } from '../../environments/env-variable';
+import { ReqOauthInfo } from './../../models/ReqOauthInfo';
 
 @Component({
   selector: 'page-sign-in',
@@ -13,7 +13,7 @@ import { EnvVariable } from '../../environments/env-variable';
 })
 export class SignInPage {
 
-  public reqJwt: ReqJwt = new ReqJwt();
+  public reqOauthInfo: ReqOauthInfo;
 
   constructor(
     private storage: Storage,
@@ -25,19 +25,20 @@ export class SignInPage {
   }
 
   initData(): void {
-    this.reqJwt.client_id = EnvVariable.client_id;
-    this.reqJwt.client_secret = EnvVariable.client_secret;
-    this.reqJwt.username = 'user';
-    this.reqJwt.password = 'userpass';
+    this.reqOauthInfo = new ReqOauthInfo();
+    this.reqOauthInfo.client_id = EnvVariable.client_id;
+    this.reqOauthInfo.client_secret = EnvVariable.client_secret;
+    this.reqOauthInfo.username = 'user';
+    this.reqOauthInfo.password = 'userpass';
   }
 
   signIn(): void {
-    this.reqJwt.grant_type = 'password';
+    this.reqOauthInfo.grant_type = 'password';
 
-    this._oauth.getJWT(this.reqJwt).then(jwt => {
-      this.storage.set('jwt', jwt).then(() => {
-        console.log(jwt);
-        this.events.publish('user:signInOrOut', jwt);
+    this._oauth.getOauth(this.reqOauthInfo).then(oauthInfo => {
+      this.storage.set('oauthInfo', oauthInfo).then(() => {
+        console.log(oauthInfo);
+        this.events.publish('user:signInOrOut', oauthInfo);
       }).catch(err => {
         console.log(err);
         alert(err);

@@ -2,19 +2,19 @@
   <ion-list>
     <ion-item>
       <ion-label>Client ID</ion-label>
-      <ion-input type="text" [(ngModel)]="reqJwt.client_id"></ion-input>
+      <ion-input type="text" [(ngModel)]="reqOauthInfo.client_id"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Client Secret</ion-label>
-      <ion-input type="text" [(ngModel)]="reqJwt.client_secret"></ion-input>
+      <ion-input type="text" [(ngModel)]="reqOauthInfo.client_secret"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>User ID</ion-label>
-      <ion-input type="text" [(ngModel)]="reqJwt.username"></ion-input>
+      <ion-input type="text" [(ngModel)]="reqOauthInfo.username"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>User PW</ion-label>
-      <ion-input type="text" [(ngModel)]="reqJwt.password"></ion-input>
+      <ion-input type="text" [(ngModel)]="reqOauthInfo.password"></ion-input>
     </ion-item>
     <ion-item>
       <button ion-button block icon-left (click)="signIn()">

@@ -11,45 +11,45 @@
   <ion-list>
     <ion-item>
       <ion-label>User ID</ion-label>
-      <ion-input type="text" [(ngModel)]="reqJwt.username"></ion-input>
+      <ion-input type="text" [(ngModel)]="reqOauthInfo.username"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>User PW</ion-label>
-      <ion-input type="text" [(ngModel)]="reqJwt.password"></ion-input>
+      <ion-input type="text" [(ngModel)]="reqOauthInfo.password"></ion-input>
     </ion-item>
     <ion-item>
-      <button ion-button block icon-left (click)="getJwt('password')">
-        get jwt
+      <button ion-button block icon-left (click)="getOauth('password')">
+        get oauthInfo
       </button>
     </ion-item>
     <ion-item>
-      <button ion-button block icon-left (click)="getJwt('refresh_token')">
-        refresh jwt
+      <button ion-button block icon-left (click)="getOauth('refresh_token')">
+        refresh oauth
       </button>
     </ion-item>
     <ion-item>
-      <button ion-button block icon-left (click)="clearJwt()">
-        clear jwt
+      <button ion-button block icon-left (click)="clearOauth()">
+        clear oauth
       </button>
     </ion-item>
-    <ng-container *ngIf="jwt != null">
+    <ng-container *ngIf="oauthInfo != null">
       <ion-item>
-        access_token: {{jwt.access_token}}
+        access_token: {{oauthInfo.access_token}}
       </ion-item>
       <ion-item>
-        token_type: {{jwt.token_type}}
+        token_type: {{oauthInfo.token_type}}
       </ion-item>
       <ion-item>
-        refresh_token: {{jwt.refresh_token}}
+        refresh_token: {{oauthInfo.refresh_token}}
       </ion-item>
       <ion-item>
-        expires_in: {{jwt.expires_in}}
+        expires_in: {{oauthInfo.expires_in}}
       </ion-item>
       <ion-item>
-        scope: {{jwt.scope}}
+        scope: {{oauthInfo.scope}}
       </ion-item>
       <ion-item>
-        jti: {{jwt.jti}}
+        jti: {{oauthInfo.jti}}
       </ion-item>
     </ng-container>
   </ion-list>

@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 
 import { EnvVariable } from './../environments/env-variable';
 
-import { ResponseDate } from '../models/ResponseDate';
-import { Jwt } from '../models/Jwt';
-import { ReqJwt } from '../models/ReqJwt';
+import { ResponseDate } from './../models/ResponseDate';
+import { OauthInfo } from './../models/OauthInfo';
+import { ReqOauthInfo } from './../models/ReqOauthInfo';
 
 @Injectable()
 export class OauthProvider {
@@ -18,19 +18,19 @@ export class OauthProvider {
     this.reqUrl = EnvVariable.resource_server_url;
   }
 
-  getJWT(reqJwt: ReqJwt): Promise<Jwt> {
-    return new Promise<Jwt>((resolve, reject) => {
+  getOauth(reqOauthInfo: ReqOauthInfo): Promise<OauthInfo> {
+    return new Promise<OauthInfo>((resolve, reject) => {
 
-      // reqJwt.client_id = EnvVariable.client_id;
-      // reqJwt.client_secret = EnvVariable.client_secret;
-      const reqData = reqJwt;
+      // reqOauthInfo.client_id = EnvVariable.client_id;
+      // reqOauthInfo.client_secret = EnvVariable.client_secret;
+      const reqData = reqOauthInfo;
 
       this.http.post(`${this.reqUrl}/oauth/token`, reqData, {})
       .subscribe(data => {
         const resData = data as ResponseDate;
 
         if(resData.res == true) {
-          resolve(resData.data as Jwt);
+          resolve(resData.data as OauthInfo);
         } else {
           const msg: string = resData.code + ": " + resData.msg;
           reject(msg);

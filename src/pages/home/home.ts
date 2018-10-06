@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import { EnvVariable } from './../../environments/env-variable';
 import { OauthProvider } from '../../providers/oauth';
 
-import { Jwt } from './../../models/Jwt';
-import { ReqJwt } from './../../models/ReqJwt';
+import { OauthInfo } from '../../models/OauthInfo';
+import { ReqOauthInfo } from '../../models/ReqOauthInfo';
 
 @Component({
   selector: 'page-home',
@@ -13,8 +14,8 @@ import { ReqJwt } from './../../models/ReqJwt';
 })
 export class HomePage {
 
-  public reqJwt: ReqJwt;
-  public jwt: Jwt;
+  public reqOauthInfo: ReqOauthInfo;
+  public oauthInfo: OauthInfo;
 
   constructor(
     public navCtrl: NavController,
@@ -26,36 +27,38 @@ export class HomePage {
   }
 
   initData(): void {
-    this.reqJwt = new ReqJwt();
-    this.reqJwt.username = 'user';
-    this.reqJwt.password = 'userpass';
+    this.reqOauthInfo = new ReqOauthInfo();
+    this.reqOauthInfo.username = 'user';
+    this.reqOauthInfo.password = 'userpass';
     
-    this.jwt = null;
+    this.oauthInfo = null;
 
-    this.storage.get('jwt').then(data => {
-      this.jwt = data;
+    this.storage.get('oauthInfo').then(data => {
+      this.oauthInfo = data;
     }).catch(err => {
       alert(err);
     });
   }
 
-  getJwt(grantType: string): void {
-    this.reqJwt.grant_type = grantType;
+  getOauth(grantType: string): void {
+    this.reqOauthInfo.client_id = EnvVariable.client_id;
+    this.reqOauthInfo.client_secret = EnvVariable.client_secret;
+    this.reqOauthInfo.grant_type = grantType;
 
     if(grantType == 'refresh_token') {
 
-      if(this.jwt == null) {
+      if(this.oauthInfo == null) {
         return null;
       } else {
-        this.reqJwt.refresh_token = this.jwt.refresh_token;
+        this.reqOauthInfo.refresh_token = this.oauthInfo.refresh_token;
       }
     }
 
-    this.jwt = null;
-    this._oauth.getJWT(this.reqJwt).then(jwt => {
-      this.storage.set('jwt', jwt).then(() => {
-        console.log(jwt);
-        this.jwt = jwt;
+    this.oauthInfo = null;
+    this._oauth.getOauth(this.reqOauthInfo).then(oauthInfo => {
+      this.storage.set('oauthInfo', oauthInfo).then(() => {
+        console.log(oauthInfo);
+        this.oauthInfo = oauthInfo;
       }).catch(err => {
         console.log(err);
         alert(err);
@@ -66,9 +69,9 @@ export class HomePage {
     });
   }
 
-  clearJwt(): void {
-    this.storage.remove('jwt').then(() => {
-      this.jwt = null;
+  clearOauth(): void {
+    this.storage.remove('oauthInfo').then(() => {
+      this.oauthInfo = null;
     }).catch(err => {
       alert(err);
     });

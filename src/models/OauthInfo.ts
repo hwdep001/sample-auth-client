@@ -1,4 +1,4 @@
-export class Jwt {
+export class OauthInfo {
   access_token: string;
   token_type: string;
   refresh_token: string;
