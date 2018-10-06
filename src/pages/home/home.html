@@ -8,11 +8,63 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <ion-list>
+    <ion-item>
+      <ion-label>Req IP</ion-label>
+      <ion-input type="text" [(ngModel)]="reqIp"></ion-input>
+    </ion-item>
+      <ion-item>
+        <ion-label>Client ID</ion-label>
+        <ion-input type="text" [(ngModel)]="reqJwt.client_id"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Client PW</ion-label>
+        <ion-input type="text" [(ngModel)]="reqJwt.client_secret"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>User ID</ion-label>
+        <ion-input type="text" [(ngModel)]="reqJwt.username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>User PW</ion-label>
+        <ion-input type="text" [(ngModel)]="reqJwt.password"></ion-input>
+      </ion-item>
+    <ion-item>
+      <button ion-button block icon-left (click)="getJWT('password')">
+        get jwt
+      </button>
+    </ion-item>
+    <ion-item>
+      <button ion-button block icon-left (click)="getJWT('refresh_token')">
+        refresh jwt
+      </button>
+    </ion-item>
+    <ion-item>
+      <button ion-button block icon-left (click)="clearJWT()">
+        clear jwt
+      </button>
+    </ion-item>
+    <ng-container *ngIf="jwt != null">
+      <ion-item>
+        access_token: {{jwt.access_token}}
+      </ion-item>
+      <ion-item>
+        token_type: {{jwt.token_type}}
+      </ion-item>
+      <ion-item>
+        refresh_token: {{jwt.refresh_token}}
+      </ion-item>
+      <ion-item>
+        expires_in: {{jwt.expires_in}}
+      </ion-item>
+      <ion-item>
+        scope: {{jwt.scope}}
+      </ion-item>
+      <ion-item>
+        jti: {{jwt.jti}}
+      </ion-item>
+    </ng-container>
+  </ion-list>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
 </ion-content>
