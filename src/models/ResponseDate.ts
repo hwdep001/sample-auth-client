@@ -1,6 +1,6 @@
 export class ResponseDate {
   res: boolean;
   code?: number;
-  msg?: String;
+  msg?: string;
   data?: any;
 }

@@ -1,9 +1,9 @@
 export class ReqJwt {
-  client_id: String;
-  client_secret: String;
-  grant_type: String;
-  username: String;
-  password: String;
+  client_id: string;
+  client_secret: string;
+  grant_type: string;
+  username: string;
+  password: string;
 
-  refresh_token: String;
+  refresh_token: string;
 }

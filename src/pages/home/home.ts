@@ -1,9 +1,11 @@
-import { ReqJwt } from './../../models/ReqJwt';
-import { Jwt } from './../../models/Jwt';
-import { OauthProvider } from './../../providers/oauth/oauth';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+
+import { OauthProvider } from '../../providers/oauth';
+
+import { Jwt } from './../../models/Jwt';
+import { ReqJwt } from './../../models/ReqJwt';
 
 @Component({
   selector: 'page-home',
@@ -11,19 +13,14 @@ import { Storage } from '@ionic/storage';
 })
 export class HomePage {
 
-  private reqIp: String;
-  private reqJwt: ReqJwt = new ReqJwt();
-  private jwt: Jwt;
+  public reqJwt: ReqJwt = new ReqJwt();
+  public jwt: Jwt;
 
   constructor(
     public navCtrl: NavController,
     private _oauth: OauthProvider,
     private storage: Storage
   ) {
-    this.reqIp = '192.168.0.251';
-    
-    this.reqJwt.client_id = 'client1';
-    this.reqJwt.client_secret = 'client1pass';
     this.reqJwt.username = 'user';
     this.reqJwt.password = 'userpass';
     
@@ -40,7 +37,7 @@ export class HomePage {
     });
   }
 
-  getJWT(grantType: String): void {
+  getJWT(grantType: string): void {
     this.reqJwt.grant_type = grantType;
 
     if(grantType == 'refresh_token') {
@@ -53,7 +50,7 @@ export class HomePage {
     }
 
     this.jwt = null;
-    this._oauth.getJWT(this.reqIp, this.reqJwt).then(jwt => {
+    this._oauth.getJWT(this.reqJwt).then(jwt => {
       this.storage.set('jwt', jwt).then(() => {
         console.log(jwt);
         this.jwt = jwt;
