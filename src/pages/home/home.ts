@@ -13,23 +13,25 @@ import { ReqJwt } from './../../models/ReqJwt';
 })
 export class HomePage {
 
-  public reqJwt: ReqJwt = new ReqJwt();
+  public reqJwt: ReqJwt;
   public jwt: Jwt;
 
   constructor(
     public navCtrl: NavController,
-    private _oauth: OauthProvider,
-    private storage: Storage
+    private storage: Storage,
+    
+    private _oauth: OauthProvider
   ) {
-    this.reqJwt.username = 'user';
-    this.reqJwt.password = 'userpass';
-    
-    this.jwt = null;
-    
     this.initData();
   }
 
   initData(): void {
+    this.reqJwt = new ReqJwt();
+    this.reqJwt.username = 'user';
+    this.reqJwt.password = 'userpass';
+    
+    this.jwt = null;
+
     this.storage.get('jwt').then(data => {
       this.jwt = data;
     }).catch(err => {
@@ -37,7 +39,7 @@ export class HomePage {
     });
   }
 
-  getJWT(grantType: string): void {
+  getJwt(grantType: string): void {
     this.reqJwt.grant_type = grantType;
 
     if(grantType == 'refresh_token') {
@@ -64,7 +66,7 @@ export class HomePage {
     });
   }
 
-  clearJWT(): void {
+  clearJwt(): void {
     this.storage.remove('jwt').then(() => {
       this.jwt = null;
     }).catch(err => {

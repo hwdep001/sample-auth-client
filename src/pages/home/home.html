@@ -18,17 +18,17 @@
       <ion-input type="text" [(ngModel)]="reqJwt.password"></ion-input>
     </ion-item>
     <ion-item>
-      <button ion-button block icon-left (click)="getJWT('password')">
+      <button ion-button block icon-left (click)="getJwt('password')">
         get jwt
       </button>
     </ion-item>
     <ion-item>
-      <button ion-button block icon-left (click)="getJWT('refresh_token')">
+      <button ion-button block icon-left (click)="getJwt('refresh_token')">
         refresh jwt
       </button>
     </ion-item>
     <ion-item>
-      <button ion-button block icon-left (click)="clearJWT()">
+      <button ion-button block icon-left (click)="clearJwt()">
         clear jwt
       </button>
     </ion-item>
@@ -53,6 +53,4 @@
       </ion-item>
     </ng-container>
   </ion-list>
-
-
 </ion-content>

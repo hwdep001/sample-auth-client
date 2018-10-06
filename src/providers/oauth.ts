@@ -15,14 +15,14 @@ export class OauthProvider {
   constructor(
     public http: HttpClient
   ) {
-    this.reqUrl = EnvVariable.resourceServerUrl;
+    this.reqUrl = EnvVariable.resource_server_url;
   }
 
   getJWT(reqJwt: ReqJwt): Promise<Jwt> {
     return new Promise<Jwt>((resolve, reject) => {
 
-      reqJwt.client_id = EnvVariable.clientId;
-      reqJwt.client_secret = EnvVariable.clientSecret;
+      // reqJwt.client_id = EnvVariable.client_id;
+      // reqJwt.client_secret = EnvVariable.client_secret;
       const reqData = reqJwt;
 
       this.http.post(`${this.reqUrl}/oauth/token`, reqData, {})
