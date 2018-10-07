@@ -1,4 +1,4 @@
-export class OauthInfo {
+export class TokenInfo {
   access_token: string;
   token_type: string;
   refresh_token: string;

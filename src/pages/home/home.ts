@@ -3,10 +3,10 @@ import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { EnvVariable } from './../../environments/env-variable';
-import { OauthProvider } from '../../providers/oauth';
+import { TokenProvider } from '../../providers/Token';
 
-import { OauthInfo } from '../../models/OauthInfo';
-import { ReqOauthInfo } from '../../models/ReqOauthInfo';
+import { TokenInfo } from '../../models/TokenInfo';
+import { ReqTokenInfo } from '../../models/ReqTokenInfo';
 
 @Component({
   selector: 'page-home',
@@ -14,51 +14,51 @@ import { ReqOauthInfo } from '../../models/ReqOauthInfo';
 })
 export class HomePage {
 
-  public reqOauthInfo: ReqOauthInfo;
-  public oauthInfo: OauthInfo;
+  public reqTokenInfo: ReqTokenInfo;
+  public tokenInfo: TokenInfo;
 
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
     
-    private _oauth: OauthProvider
+    private _token: TokenProvider
   ) {
     this.initData();
   }
 
   initData(): void {
-    this.reqOauthInfo = new ReqOauthInfo();
-    this.reqOauthInfo.username = 'user';
-    this.reqOauthInfo.password = 'userpass';
+    this.reqTokenInfo = new ReqTokenInfo();
+    this.reqTokenInfo.username = 'user';
+    this.reqTokenInfo.password = 'userpass';
     
-    this.oauthInfo = null;
+    this.tokenInfo = null;
 
-    this.storage.get('oauthInfo').then(data => {
-      this.oauthInfo = data;
+    this.storage.get('tokenInfo').then(data => {
+      this.tokenInfo = data;
     }).catch(err => {
       alert(err);
     });
   }
 
-  getOauth(grantType: string): void {
-    this.reqOauthInfo.client_id = EnvVariable.client_id;
-    this.reqOauthInfo.client_secret = EnvVariable.client_secret;
-    this.reqOauthInfo.grant_type = grantType;
+  getToken(grantType: string): void {
+    this.reqTokenInfo.client_id = EnvVariable.client_id;
+    this.reqTokenInfo.client_secret = EnvVariable.client_secret;
+    this.reqTokenInfo.grant_type = grantType;
 
     if(grantType == 'refresh_token') {
 
-      if(this.oauthInfo == null) {
+      if(this.tokenInfo == null) {
         return null;
       } else {
-        this.reqOauthInfo.refresh_token = this.oauthInfo.refresh_token;
+        this.reqTokenInfo.refresh_token = this.tokenInfo.refresh_token;
       }
     }
 
-    this.oauthInfo = null;
-    this._oauth.getOauth(this.reqOauthInfo).then(oauthInfo => {
-      this.storage.set('oauthInfo', oauthInfo).then(() => {
-        console.log(oauthInfo);
-        this.oauthInfo = oauthInfo;
+    this.tokenInfo = null;
+    this._token.getToken(this.reqTokenInfo).then(tokenInfo => {
+      this.storage.set('tokenInfo', tokenInfo).then(() => {
+        console.log(tokenInfo);
+        this.tokenInfo = tokenInfo;
       }).catch(err => {
         console.log(err);
         alert(err);
@@ -69,9 +69,9 @@ export class HomePage {
     });
   }
 
-  clearOauth(): void {
-    this.storage.remove('oauthInfo').then(() => {
-      this.oauthInfo = null;
+  clearToken(): void {
+    this.storage.remove('tokenInfo').then(() => {
+      this.tokenInfo = null;
     }).catch(err => {
       alert(err);
     });

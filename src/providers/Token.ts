@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { EnvVariable } from './../environments/env-variable';
+import { EnvVariable } from '../environments/env-variable';
 
-import { ResponseDate } from './../models/ResponseDate';
-import { OauthInfo } from './../models/OauthInfo';
-import { ReqOauthInfo } from './../models/ReqOauthInfo';
+import { ResponseDate } from '../models/ResponseDate';
+import { TokenInfo } from '../models/TokenInfo';
+import { ReqTokenInfo } from '../models/ReqTokenInfo';
 
 @Injectable()
-export class OauthProvider {
+export class TokenProvider {
 
   private reqUrl: string = null;
 
@@ -18,19 +18,19 @@ export class OauthProvider {
     this.reqUrl = EnvVariable.resource_server_url;
   }
 
-  getOauth(reqOauthInfo: ReqOauthInfo): Promise<OauthInfo> {
-    return new Promise<OauthInfo>((resolve, reject) => {
+  getToken(reqTokenInfo: ReqTokenInfo): Promise<TokenInfo> {
+    return new Promise<TokenInfo>((resolve, reject) => {
 
-      // reqOauthInfo.client_id = EnvVariable.client_id;
-      // reqOauthInfo.client_secret = EnvVariable.client_secret;
-      const reqData = reqOauthInfo;
+      // reqTokenInfo.client_id = EnvVariable.client_id;
+      // reqTokenInfo.client_secret = EnvVariable.client_secret;
+      const reqData = reqTokenInfo;
 
       this.http.post(`${this.reqUrl}/oauth/token`, reqData, {})
       .subscribe(data => {
         const resData = data as ResponseDate;
 
         if(resData.res == true) {
-          resolve(resData.data as OauthInfo);
+          resolve(resData.data as TokenInfo);
         } else {
           const msg: string = resData.code + ": " + resData.msg;
           reject(msg);

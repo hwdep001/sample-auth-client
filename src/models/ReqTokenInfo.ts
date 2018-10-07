@@ -1,4 +1,4 @@
-export class ReqOauthInfo {
+export class ReqTokenInfo {
   client_id: string;
   client_secret: string;
   grant_type: string;

@@ -8,7 +8,7 @@ import { SignInPage } from './../pages/sign-in/sign-in';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
-import { OauthInfo } from './../models/OauthInfo';
+import { TokenInfo } from '../models/TokenInfo';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,12 +29,12 @@ export class MyApp {
   ) {
     this.initializeApp();
 
-    this.events.subscribe('user:signInOrOut', (oauthInfo: OauthInfo) => {
-      this.initializePage(oauthInfo);
+    this.events.subscribe('user:signInOrOut', (tokenInfo: TokenInfo) => {
+      this.initializePage(tokenInfo);
     });
 
-    this.storage.get('oauthInfo').then((oauthInfo: OauthInfo) => {
-      this.initializePage(oauthInfo);
+    this.storage.get('tokenInfo').then((tokenInfo: TokenInfo) => {
+      this.initializePage(tokenInfo);
     });
   }
 
@@ -47,9 +47,9 @@ export class MyApp {
     });
   }
 
-  initializePage(oauthInfo: OauthInfo): void {
+  initializePage(tokenInfo: TokenInfo): void {
 
-    if(oauthInfo == null) {
+    if(tokenInfo == null) {
       this.setRootPage(true);
       this.isSignedIn = false;
       this.pages = [
@@ -83,7 +83,7 @@ export class MyApp {
 
   signOut(): void {
     setTimeout(() => {
-      this.storage.remove('oauthInfo').then(() => {
+      this.storage.remove('tokenInfo').then(() => {
         this.events.publish('user:signInOrOut', null);
       }).catch(err => {
         console.log(err);

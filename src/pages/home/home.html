@@ -11,45 +11,45 @@
   <ion-list>
     <ion-item>
       <ion-label>User ID</ion-label>
-      <ion-input type="text" [(ngModel)]="reqOauthInfo.username"></ion-input>
+      <ion-input type="text" [(ngModel)]="reqTokenInfo.username"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>User PW</ion-label>
-      <ion-input type="text" [(ngModel)]="reqOauthInfo.password"></ion-input>
+      <ion-input type="text" [(ngModel)]="reqTokenInfo.password"></ion-input>
     </ion-item>
     <ion-item>
-      <button ion-button block icon-left (click)="getOauth('password')">
-        get oauthInfo
+      <button ion-button block icon-left (click)="getToken('password')">
+        get tokenInfo
       </button>
     </ion-item>
     <ion-item>
-      <button ion-button block icon-left (click)="getOauth('refresh_token')">
-        refresh oauth
+      <button ion-button block icon-left (click)="getToken('refresh_token')">
+        refresh token
       </button>
     </ion-item>
     <ion-item>
-      <button ion-button block icon-left (click)="clearOauth()">
-        clear oauth
+      <button ion-button block icon-left (click)="clearToken()">
+        clear token
       </button>
     </ion-item>
-    <ng-container *ngIf="oauthInfo != null">
+    <ng-container *ngIf="tokenInfo != null">
       <ion-item>
-        access_token: {{oauthInfo.access_token}}
+        access_token: {{tokenInfo.access_token}}
       </ion-item>
       <ion-item>
-        token_type: {{oauthInfo.token_type}}
+        token_type: {{tokenInfo.token_type}}
       </ion-item>
       <ion-item>
-        refresh_token: {{oauthInfo.refresh_token}}
+        refresh_token: {{tokenInfo.refresh_token}}
       </ion-item>
       <ion-item>
-        expires_in: {{oauthInfo.expires_in}}
+        expires_in: {{tokenInfo.expires_in}}
       </ion-item>
       <ion-item>
-        scope: {{oauthInfo.scope}}
+        scope: {{tokenInfo.scope}}
       </ion-item>
       <ion-item>
-        jti: {{oauthInfo.jti}}
+        jti: {{tokenInfo.jti}}
       </ion-item>
     </ng-container>
   </ion-list>
