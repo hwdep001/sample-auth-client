@@ -10,46 +10,34 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-label>User ID</ion-label>
-      <ion-input type="text" [(ngModel)]="reqTokenInfo.username"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>User PW</ion-label>
-      <ion-input type="text" [(ngModel)]="reqTokenInfo.password"></ion-input>
-    </ion-item>
-    <ion-item>
-      <button ion-button block icon-left (click)="getToken('password')">
-        get tokenInfo
-      </button>
-    </ion-item>
-    <ion-item>
-      <button ion-button block icon-left (click)="getToken('refresh_token')">
+      <button ion-button block icon-left (click)="refreshToken()">
         refresh token
-      </button>
-    </ion-item>
-    <ion-item>
-      <button ion-button block icon-left (click)="clearToken()">
-        clear token
       </button>
     </ion-item>
     <ng-container *ngIf="tokenInfo != null">
       <ion-item>
-        access_token: {{tokenInfo.access_token}}
+        access_token
+        <ion-note>{{tokenInfo.access_token}}</ion-note>
       </ion-item>
       <ion-item>
-        token_type: {{tokenInfo.token_type}}
+        token_type
+        <ion-note item-end>{{tokenInfo.token_type}}</ion-note>
       </ion-item>
       <ion-item>
-        refresh_token: {{tokenInfo.refresh_token}}
+        refresh_token
+        <ion-note>{{tokenInfo.refresh_token}}</ion-note>
       </ion-item>
       <ion-item>
-        expires_in: {{tokenInfo.expires_in}}
+        expires_in
+        <ion-note item-end>{{tokenInfo.expires_in}}</ion-note>
       </ion-item>
       <ion-item>
-        scope: {{tokenInfo.scope}}
+        scope
+        <ion-note item-end>{{tokenInfo.scope}}</ion-note>
       </ion-item>
       <ion-item>
-        jti: {{tokenInfo.jti}}
+        jti
+        <ion-note item-end>{{tokenInfo.jti}}</ion-note>
       </ion-item>
     </ng-container>
   </ion-list>

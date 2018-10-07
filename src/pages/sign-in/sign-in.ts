@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { Events } from 'ionic-angular';
 
-import { EnvVariable } from '../../environments/env-variable';
-import { TokenProvider } from '../../providers/Token';
+import { EnvVariable } from './../../environments/env-variable';
+import { AuthProvider } from './../../providers/Auth';
 
-import { ReqTokenInfo } from '../../models/ReqTokenInfo';
+import { ReqTokenInfo } from './../../models/ReqTokenInfo';
 
 @Component({
   selector: 'page-sign-in',
@@ -16,10 +14,7 @@ export class SignInPage {
   public reqTokenInfo: ReqTokenInfo;
 
   constructor(
-    private storage: Storage,
-    private events: Events,
-
-    private _token: TokenProvider
+    private _auth: AuthProvider
   ) {
     this.initData();
   }
@@ -33,19 +28,10 @@ export class SignInPage {
   }
 
   signIn(): void {
-    this.reqTokenInfo.grant_type = 'password';
-
-    this._token.getToken(this.reqTokenInfo).then(tokenInfo => {
-      this.storage.set('tokenInfo', tokenInfo).then(() => {
-        console.log(tokenInfo);
-        this.events.publish('user:signInOrOut', tokenInfo);
-      }).catch(err => {
-        console.log(err);
-        alert(err);
-      });
+    this._auth.signIn(this.reqTokenInfo).then(tokenInfo => {
     }).catch(err => {
       console.log(err);
-      alert(err);
+      alert(JSON.stringify(err));
     });
   }
 

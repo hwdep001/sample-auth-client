@@ -5,10 +5,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 
 import { SignInPage } from './../pages/sign-in/sign-in';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { HomePage } from './../pages/home/home';
+import { ListPage } from './../pages/list/list';
+import { MyInfoPage } from './../pages/my-info/my-info';
 
-import { TokenInfo } from '../models/TokenInfo';
+import { TokenInfo } from './../models/TokenInfo';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,14 +19,14 @@ export class MyApp {
 
   public rootPage: any = null;
   public isSignedIn: boolean = false;
-  public pages: Array<{title: string, component?: any}>;
+  public pages: Array<{title: string, component: any}>;
 
   constructor(
     public platform: Platform, 
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
-    private storage: Storage,
-    private events: Events
+    private events: Events,
+    private storage: Storage
   ) {
     this.initializeApp();
 
@@ -61,7 +62,7 @@ export class MyApp {
       this.pages = [
         { title: 'Home', component: HomePage },
         { title: 'List', component: ListPage },
-        { title: 'Sign Out'}
+        { title: 'My info', component: MyInfoPage }
       ];
     }
   }
@@ -71,25 +72,9 @@ export class MyApp {
   }
 
   openPage(page): void {
-
-    if(page.title == 'Sign Out') {
-      this.signOut();
-    } else {
-      // Reset the content nav to have just this page
-      // we wouldn't want the back button to show in this scenario
-      this.nav.setRoot(page.component);
-    }
-  }
-
-  signOut(): void {
-    setTimeout(() => {
-      this.storage.remove('tokenInfo').then(() => {
-        this.events.publish('user:signInOrOut', null);
-      }).catch(err => {
-        console.log(err);
-        alert(err);
-      });
-    }, 1000);
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(page.component);
   }
 
 }
