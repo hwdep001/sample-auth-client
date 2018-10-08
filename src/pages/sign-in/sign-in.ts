@@ -21,8 +21,8 @@ export class SignInPage {
 
   initData(): void {
     this.reqTokenInfo = new ReqTokenInfo();
-    this.reqTokenInfo.client_id = EnvVariable.client_id;
-    this.reqTokenInfo.client_secret = EnvVariable.client_secret;
+    this.reqTokenInfo.clientId = EnvVariable.clientId;
+    this.reqTokenInfo.clientSecret = EnvVariable.clientSecret;
     this.reqTokenInfo.username = 'user';
     this.reqTokenInfo.password = 'userpass';
   }

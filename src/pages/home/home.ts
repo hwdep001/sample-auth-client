@@ -41,9 +41,9 @@ export class HomePage {
 
   refreshToken(): void {
     let reqTokenInfo = new ReqTokenInfo();
-    reqTokenInfo.client_id = EnvVariable.client_id;
-    reqTokenInfo.client_secret = EnvVariable.client_secret;
-    reqTokenInfo.refresh_token = this.tokenInfo.refresh_token;
+    reqTokenInfo.clientId = EnvVariable.clientId;
+    reqTokenInfo.clientSecret = EnvVariable.clientSecret;
+    reqTokenInfo.refreshToken = this.tokenInfo.refreshToken;
 
     this.tokenInfo = null;
     this._auth.refreshToken(reqTokenInfo).then(tokenInfo => {

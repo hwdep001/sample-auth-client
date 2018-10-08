@@ -20,18 +20,18 @@ export class AuthProvider {
     private events: Events,
     private storage: Storage
   ) {
-    this.reqUrl = EnvVariable.resource_server_url;
+    this.reqUrl = EnvVariable.resourceServerUrl;
   }
 
   async getJwtInfo() {
-    let jwtInfo = new JwtInfo();
+    let jwtInfo = null;
 
-    const tokenInfo = await this.storage.get('tokenInfo');
+    const tokenInfo: TokenInfo = await this.storage.get('tokenInfo');
 
     if(tokenInfo != null) {
-      const payload = tokenInfo.access_token.split('.')[1];
+      const payload = tokenInfo.accessToken.split('.')[1];
       const decodedPayload = window.atob(payload);
-      jwtInfo = JSON.parse(decodedPayload) as JwtInfo;
+      jwtInfo = new JwtInfo(decodedPayload);
     }
 
     return jwtInfo;
@@ -40,7 +40,7 @@ export class AuthProvider {
   signIn(reqTokenInfo: ReqTokenInfo): Promise<TokenInfo> {
     return new Promise<TokenInfo>((resolve, reject) => {
 
-      reqTokenInfo.grant_type = 'password';
+      reqTokenInfo.grantType = 'password';
 
       return this.getToken(reqTokenInfo).then(tokenInfo => {
         this.storage.set('tokenInfo', tokenInfo).then(() => {
@@ -68,10 +68,10 @@ export class AuthProvider {
     return new Promise<TokenInfo>((resolve, reject) => {
 
       // [test] 아래 2줄 삭제
-      reqTokenInfo.client_id = EnvVariable.client_id;
-      reqTokenInfo.client_secret = EnvVariable.client_secret;
+      reqTokenInfo.clientId = EnvVariable.clientId;
+      reqTokenInfo.clientSecret = EnvVariable.clientSecret;
 
-      reqTokenInfo.grant_type = 'refresh_token';
+      reqTokenInfo.grantType = 'refresh_token';
 
       return this.getToken(reqTokenInfo).then(tokenInfo => {
         this.storage.set('tokenInfo', tokenInfo).then(() => {

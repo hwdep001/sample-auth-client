@@ -19,7 +19,6 @@ export class MyInfoPage {
   }
 
   async initData() {
-    this.jtwInfo = new JwtInfo();
     this.jtwInfo = await this._auth.getJwtInfo();
     console.log(this.jtwInfo);
   }

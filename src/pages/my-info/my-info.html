@@ -8,18 +8,19 @@
 </ion-header>
 
 <ion-content padding>
+  <ng-container *ngIf="jtwInfo != null">
   <ion-list>
     <ion-item>
       jti
       <ion-note item-end>{{jtwInfo.jti}}</ion-note>
     </ion-item>
     <ion-item>
-      client_id
-      <ion-note item-end>{{jtwInfo.client_id}}</ion-note>
+      clientId
+      <ion-note item-end>{{jtwInfo.clientId}}</ion-note>
     </ion-item>
     <ion-item>
-      user_name
-      <ion-note item-end>{{jtwInfo.user_name}}</ion-note>
+      userName
+      <ion-note item-end>{{jtwInfo.userName}}</ion-note>
     </ion-item>
     <ion-item>
       authorities
@@ -40,4 +41,5 @@
       </button>
     </ion-item>
   </ion-list>
+  </ng-container>
 </ion-content>
