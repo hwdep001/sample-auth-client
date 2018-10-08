@@ -2,14 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
-
-import { MyApp } from './app.component';
-import { PipesModule } from './PipesModule';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AuthProvider } from '../providers/Auth';
+
+import { MyApp } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PipesModule } from './PipesModule';
+
+import { AuthProvider } from './../providers/Auth';
+import { CommonProvider } from '../providers/Common';
 
 import { SignInPage } from './../pages/sign-in/sign-in';
 import { HomePage } from './../pages/home/home';
@@ -43,7 +44,8 @@ import { MyInfoPage } from './../pages/my-info/my-info';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider
+    AuthProvider,
+    CommonProvider
   ]
 })
 export class AppModule {}

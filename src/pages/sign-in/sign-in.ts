@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { EnvVariable } from './../../environments/env-variable';
 import { AuthProvider } from './../../providers/Auth';
+import { CommonProvider } from './../../providers/Common';
 
 import { ReqTokenInfo } from './../../models/ReqTokenInfo';
 
@@ -14,7 +15,8 @@ export class SignInPage {
   public reqTokenInfo: ReqTokenInfo;
 
   constructor(
-    private _auth: AuthProvider
+    private _auth: AuthProvider,
+    private _cmn: CommonProvider
   ) {
     this.initData();
   }
@@ -28,6 +30,9 @@ export class SignInPage {
   }
 
   signIn(): void {
+    const loader = this._cmn.getLoader(null, 30000, true);
+    loader.present();
+
     this._auth.signIn(this.reqTokenInfo).then(tokenInfo => {
     }).catch(err => {
       console.log(err);
