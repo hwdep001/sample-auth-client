@@ -68,7 +68,7 @@ export class MyApp {
   }
 
   setRootPage(goSignInPage: boolean): void {
-    this.rootPage = goSignInPage == true ? SignInPage : HomePage;
+    this.rootPage = (goSignInPage == true ? SignInPage : HomePage);
   }
 
   openPage(page): void {

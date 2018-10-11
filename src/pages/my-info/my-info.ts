@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { AuthProvider } from './../../providers/Auth';
 import { CommonProvider } from './../../providers/Common';
+import { AuthProvider } from './../../providers/Auth';
 
 import { JwtInfo } from './../../models/JwtInfo';
 
@@ -14,22 +14,22 @@ export class MyInfoPage {
   public jtwInfo: JwtInfo;
 
   constructor(
-    private _auth: AuthProvider,
-    private _cmn: CommonProvider
+    private authService: AuthProvider,
+    private cmnService: CommonProvider
   ) {
     this.initData();
   }
 
   async initData() {
-    this.jtwInfo = await this._auth.getJwtInfo();
+    this.jtwInfo = await this.authService.getJwtInfo();
     console.log(this.jtwInfo);
   }
 
   signOut(): void {
-    const loader = this._cmn.getLoader(null, 30000, true);
+    const loader = this.cmnService.getLoader(null, 30000, true);
     loader.present();
 
-    this._auth.signOut();
+    this.authService.signOut();
   }
 
 }

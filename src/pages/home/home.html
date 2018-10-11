@@ -9,11 +9,6 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item>
-      <button ion-button block icon-left (click)="refreshToken()">
-        refresh token
-      </button>
-    </ion-item>
     <ng-container *ngIf="tokenInfo != null">
       <ion-item>
         accessToken

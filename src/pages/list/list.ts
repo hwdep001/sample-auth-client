@@ -1,37 +1,42 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+
+import { CommonProvider } from './../../providers/Common';
+import { ItemProvider } from './../../providers/Item';
+
+import { Item } from './../../models/Item';
 
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
 })
 export class ListPage {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  
+  public items: Array<Item>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
-
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  constructor(
+    private cmnService: CommonProvider,
+    private itemService: ItemProvider
+  ) {
+    // this.initData();
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
-    });
+  initData(): void {
+    this.search();
   }
+
+  search(): void {
+    const loader = this.cmnService.getLoader();
+    loader.present();
+
+    // this.itemService.getItemList().then(items => {
+    //   this.items = items;
+    //   loader.dismiss();
+
+    // }).catch(err => {
+    //   loader.dismiss();
+    //   console.log(err);
+    //   alert(JSON.stringify(err));
+    // });
+  }
+
 }

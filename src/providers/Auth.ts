@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { EnvVariable } from './../environments/env-variable';
 
-import { ResponseDate } from './../models/ResponseDate';
 import { TokenInfo } from './../models/TokenInfo';
 import { ReqTokenInfo } from './../models/ReqTokenInfo';
 import { JwtInfo } from './../models/JwtInfo';
@@ -13,17 +12,19 @@ import { JwtInfo } from './../models/JwtInfo';
 @Injectable()
 export class AuthProvider {
 
-  private reqUrl: string = null;
+  private reqAuthUrl: string;
+  private reqResourceUrl: string;
 
   constructor(
     private http: HttpClient,
     private events: Events,
-    private storage: Storage
+    private storage: Storage,
   ) {
-    this.reqUrl = EnvVariable.resourceServerUrl;
+    this.reqAuthUrl = EnvVariable.authServerUrl;
+    this.reqResourceUrl = EnvVariable.resourceServerUrl;
   }
 
-  async getJwtInfo() {
+  async getJwtInfo(): Promise<JwtInfo> {
     let jwtInfo = null;
 
     const tokenInfo: TokenInfo = await this.storage.get('tokenInfo');
@@ -45,6 +46,11 @@ export class AuthProvider {
       return this.getToken(reqTokenInfo).then(tokenInfo => {
         this.storage.set('tokenInfo', tokenInfo).then(() => {
           this.events.publish('user:signInOrOut', tokenInfo);
+
+          this.http.post(`${this.reqResourceUrl}/user/update_sign_in`, null, {
+            headers: new HttpHeaders().set('Authorization', 'bearer ' + tokenInfo.accessToken)
+          });
+
           resolve(tokenInfo);
         }).catch(err => {
           reject(err);
@@ -64,27 +70,6 @@ export class AuthProvider {
     });
   }
 
-  refreshToken(reqTokenInfo: ReqTokenInfo): Promise<TokenInfo> {
-    return new Promise<TokenInfo>((resolve, reject) => {
-
-      // [test] 아래 2줄 삭제
-      reqTokenInfo.clientId = EnvVariable.clientId;
-      reqTokenInfo.clientSecret = EnvVariable.clientSecret;
-
-      reqTokenInfo.grantType = 'refresh_token';
-
-      return this.getToken(reqTokenInfo).then(tokenInfo => {
-        this.storage.set('tokenInfo', tokenInfo).then(() => {
-          resolve(tokenInfo);
-        }).catch(err => {
-          reject(err);
-        });
-      }).catch(err => {
-        reject(err);
-      });
-    });
-  }
-
   /**
    * Get new or refresh token info.
    * @param reqTokenInfo 
@@ -92,22 +77,29 @@ export class AuthProvider {
   private getToken(reqTokenInfo: ReqTokenInfo): Promise<TokenInfo> {
     return new Promise<TokenInfo>((resolve, reject) => {
 
-      // [test] 주석 풀어야 함
-      // reqTokenInfo.client_id = EnvVariable.client_id;
-      // reqTokenInfo.client_secret = EnvVariable.client_secret;
-      const reqData = reqTokenInfo;
+      reqTokenInfo.clientId = EnvVariable.clientId;
+      reqTokenInfo.clientSecret = EnvVariable.clientSecret;
 
-      this.http.post(`${this.reqUrl}/oauth/token`, reqData, {})
+      let reqData = new HttpParams()
+        .set('grant_type', reqTokenInfo.grantType)
+        
+      if (reqTokenInfo.grantType = 'password') {
+        reqData = reqData.set('username', reqTokenInfo.username)
+                         .set('password', reqTokenInfo.password);
+      } else if (reqTokenInfo.grantType = 'refresh_token') {
+        reqData = reqData.set('refresh_token', reqTokenInfo.refreshToken);
+      }
+
+      const reqHeaders = new HttpHeaders()
+        .set('Authorization', reqTokenInfo.getBasicAuthorization())
+        .set('Content-Type', 'application/x-www-form-urlencoded');
+
+      this.http.post(`${this.reqAuthUrl}/oauth/token`, null,{
+        headers: reqHeaders,
+        params: reqData
+      })
       .subscribe(data => {
-        const resData = data as ResponseDate;
-
-        if(resData.res == true) {
-          resolve(resData.data as TokenInfo);
-        } else {
-          const msg: string = resData.code + ": " + resData.msg;
-          reject(msg);
-        }
-
+        resolve(new TokenInfo(JSON.stringify(data)));
       }, err => {
         reject(err);
       });

@@ -15,8 +15,8 @@ export class SignInPage {
   public reqTokenInfo: ReqTokenInfo;
 
   constructor(
-    private _auth: AuthProvider,
-    private _cmn: CommonProvider
+    private authService: AuthProvider,
+    private cmnService: CommonProvider
   ) {
     this.initData();
   }
@@ -30,11 +30,12 @@ export class SignInPage {
   }
 
   signIn(): void {
-    const loader = this._cmn.getLoader(null, 30000, true);
+    const loader = this.cmnService.getLoader(null, 30000, true);
     loader.present();
 
-    this._auth.signIn(this.reqTokenInfo).then(tokenInfo => {
+    this.authService.signIn(this.reqTokenInfo).then(tokenInfo => {
     }).catch(err => {
+      loader.dismiss();
       console.log(err);
       alert(JSON.stringify(err));
     });
