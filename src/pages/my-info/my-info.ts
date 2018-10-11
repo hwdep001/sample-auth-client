@@ -11,7 +11,7 @@ import { JwtInfo } from './../../models/JwtInfo';
 })
 export class MyInfoPage {
 
-  public jtwInfo: JwtInfo;
+  public jtwInfo: JwtInfo = new JwtInfo();
 
   constructor(
     private authService: AuthProvider,
@@ -22,7 +22,6 @@ export class MyInfoPage {
 
   async initData() {
     this.jtwInfo = await this.authService.getJwtInfo();
-    console.log(this.jtwInfo);
   }
 
   signOut(): void {

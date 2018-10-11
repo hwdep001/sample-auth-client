@@ -7,14 +7,17 @@ export class JwtInfo {
   scope: string;
   exp: number;
 
-  constructor(payload: string) {
+  static fromData(payload: string): JwtInfo {
     const payloadJson = JSON.parse(payload);
-    this.jti = payloadJson.jti;
-    this.clientId = payloadJson.client_id;
-    this.userName = payloadJson.user_name;
-    this.authorities = payloadJson.authorities;
-    this.scope = payloadJson.scope;
-    this.exp = payloadJson.exp;
+    
+    let jwtInfo = new this();
+    jwtInfo.jti = payloadJson.jti;
+    jwtInfo.clientId = payloadJson.client_id;
+    jwtInfo.userName = payloadJson.user_name;
+    jwtInfo.authorities = payloadJson.authorities;
+    jwtInfo.scope = payloadJson.scope;
+    jwtInfo.exp = payloadJson.exp;
+    return jwtInfo;
   }
   
 }

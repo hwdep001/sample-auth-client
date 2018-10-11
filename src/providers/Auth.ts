@@ -32,7 +32,7 @@ export class AuthProvider {
     if(tokenInfo != null) {
       const payload = tokenInfo.accessToken.split('.')[1];
       const decodedPayload = window.atob(payload);
-      jwtInfo = new JwtInfo(decodedPayload);
+      jwtInfo = JwtInfo.fromData(decodedPayload);
     }
 
     return jwtInfo;
@@ -99,7 +99,7 @@ export class AuthProvider {
         params: reqData
       })
       .subscribe(data => {
-        resolve(new TokenInfo(JSON.stringify(data)));
+        resolve(TokenInfo.fromData(JSON.stringify(data)));
       }, err => {
         reject(err);
       });

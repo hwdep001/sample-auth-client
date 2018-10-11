@@ -7,14 +7,17 @@ export class TokenInfo {
   scope: string;
   jti: string;
 
-  constructor(data: string) {
+  static fromData(data: string): TokenInfo {
     const dataJson = JSON.parse(data);
-    this.accessToken = dataJson.access_token;
-    this.tokenType = dataJson.token_type;
-    this.refreshToken = dataJson.refresh_token;
-    this.expiresIn = dataJson.expires_in;
-    this.scope = dataJson.scope;
-    this.jti = dataJson.jti;
+    
+    let tokenInfo = new this();
+    tokenInfo.accessToken = dataJson.access_token;
+    tokenInfo.tokenType = dataJson.token_type;
+    tokenInfo.refreshToken = dataJson.refresh_token;
+    tokenInfo.expiresIn = dataJson.expires_in;
+    tokenInfo.scope = dataJson.scope;
+    tokenInfo.jti = dataJson.jti;
+    return tokenInfo;
   }
 
 }

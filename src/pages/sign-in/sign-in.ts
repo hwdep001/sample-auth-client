@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 
-import { EnvVariable } from './../../environments/env-variable';
-import { AuthProvider } from './../../providers/Auth';
 import { CommonProvider } from './../../providers/Common';
+import { AuthProvider } from './../../providers/Auth';
 
 import { ReqTokenInfo } from './../../models/ReqTokenInfo';
 
@@ -12,7 +11,7 @@ import { ReqTokenInfo } from './../../models/ReqTokenInfo';
 })
 export class SignInPage {
 
-  public reqTokenInfo: ReqTokenInfo;
+  public reqTokenInfo: ReqTokenInfo = new ReqTokenInfo();
 
   constructor(
     private authService: AuthProvider,
@@ -22,9 +21,6 @@ export class SignInPage {
   }
 
   initData(): void {
-    this.reqTokenInfo = new ReqTokenInfo();
-    this.reqTokenInfo.clientId = EnvVariable.clientId;
-    this.reqTokenInfo.clientSecret = EnvVariable.clientSecret;
     this.reqTokenInfo.username = 'user';
     this.reqTokenInfo.password = 'userpass';
   }

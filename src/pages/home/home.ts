@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { TokenInfo } from './../../models/TokenInfo';
@@ -10,18 +9,15 @@ import { TokenInfo } from './../../models/TokenInfo';
 })
 export class HomePage {
 
-  public tokenInfo: TokenInfo;
+  public tokenInfo: TokenInfo = new TokenInfo();
 
   constructor(
-    public navCtrl: NavController,
     private storage: Storage
   ) {
     this.initData();
   }
 
   initData(): void {    
-    this.tokenInfo = null;
-
     this.storage.get('tokenInfo').then((data: TokenInfo) => {
       this.tokenInfo = data;
     }).catch(err => {

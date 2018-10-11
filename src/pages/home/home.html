@@ -9,31 +9,29 @@
 
 <ion-content padding>
   <ion-list>
-    <ng-container *ngIf="tokenInfo != null">
-      <ion-item>
-        accessToken
-        <ion-note>{{tokenInfo.accessToken}}</ion-note>
-      </ion-item>
-      <ion-item>
-        tokenType
-        <ion-note item-end>{{tokenInfo.tokenType}}</ion-note>
-      </ion-item>
-      <ion-item>
-        refreshToken
-        <ion-note>{{tokenInfo.refreshToken}}</ion-note>
-      </ion-item>
-      <ion-item>
-        expiresIn
-        <ion-note item-end>{{tokenInfo.expiresIn}}</ion-note>
-      </ion-item>
-      <ion-item>
-        scope
-        <ion-note item-end>{{tokenInfo.scope}}</ion-note>
-      </ion-item>
-      <ion-item>
-        jti
-        <ion-note item-end>{{tokenInfo.jti}}</ion-note>
-      </ion-item>
-    </ng-container>
+    <ion-item>
+      accessToken
+      <ion-note>{{tokenInfo.accessToken}}</ion-note>
+    </ion-item>
+    <ion-item>
+      tokenType
+      <ion-note item-end>{{tokenInfo.tokenType}}</ion-note>
+    </ion-item>
+    <ion-item>
+      refreshToken
+      <ion-note>{{tokenInfo.refreshToken}}</ion-note>
+    </ion-item>
+    <ion-item>
+      expiresIn
+      <ion-note item-end>{{tokenInfo.expiresIn}}</ion-note>
+    </ion-item>
+    <ion-item>
+      scope
+      <ion-note item-end>{{tokenInfo.scope}}</ion-note>
+    </ion-item>
+    <ion-item>
+      jti
+      <ion-note item-end>{{tokenInfo.jti}}</ion-note>
+    </ion-item>
   </ion-list>
 </ion-content>
