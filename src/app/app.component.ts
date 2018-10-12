@@ -8,6 +8,8 @@ import { SignInPage } from './../pages/sign-in/sign-in';
 import { HomePage } from './../pages/home/home';
 import { MyInfoPage } from './../pages/my-info/my-info';
 
+import { UserProvider } from './../providers/User';
+
 import { TokenInfo } from './../models/TokenInfo';
 
 @Component({
@@ -25,9 +27,11 @@ export class MyApp {
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
     private events: Events,
-    private storage: Storage
+    private storage: Storage,
+    private userService: UserProvider
   ) {
     this.initializeApp();
+    this.userService.void();
 
     this.events.subscribe('user:signInOrOut', (tokenInfo: TokenInfo) => {
       this.initializePage(tokenInfo);

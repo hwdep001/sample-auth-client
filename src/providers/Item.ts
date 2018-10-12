@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { EnvVariable } from './../environments/env-variable';
 
 import { AuthProvider } from './Auth';
 
-import { ResponseDate } from './../models/ResponseDate';
+import { ResponseData } from './../models/ResponseData';
 import { Item } from './../models/Item';
 
 @Injectable()
@@ -29,15 +29,15 @@ export class ItemProvider {
         headers: new HttpHeaders().set('Authorization', bearerAuthorization)
       })
       .subscribe(data => {
-        const resData = data as ResponseDate;
+        const resData = data as ResponseData;
 
         if (resData.res == true) {
           resolve(resData.data as Array<Item>);
         } else {
-          reject(resData.code + ": " + resData.msg)
+          reject(resData);
         }
-      }, err => {
-        reject(err);
+      }, (err: HttpErrorResponse) => {
+        reject(ResponseData.fromHttpErr(err));
       });
     });
   }

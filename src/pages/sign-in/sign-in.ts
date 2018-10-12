@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { CommonProvider } from './../../providers/Common';
 import { AuthProvider } from './../../providers/Auth';
 
+import { ResponseData } from './../../models/ResponseData';
 import { ReqTokenInfo } from './../../models/ReqTokenInfo';
 
 @Component({
@@ -30,10 +31,9 @@ export class SignInPage {
     loader.present();
 
     this.authService.signIn(this.reqTokenInfo).then(tokenInfo => {
-    }).catch(err => {
+    }).catch((err: ResponseData) => {
       loader.dismiss();
-      console.log(err);
-      alert(JSON.stringify(err));
+      alert(err.code + ": " + err.data);
     });
   }
 

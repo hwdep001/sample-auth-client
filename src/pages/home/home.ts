@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { AuthProvider } from './../../providers/Auth';
 import { ItemProvider } from './../../providers/Item';
 
+import { ResponseData } from './../../models/ResponseData';
 import { TokenInfo } from './../../models/TokenInfo';
 import { Item } from './../../models/Item';
 
@@ -36,16 +37,14 @@ export class HomePage {
   private getTokenInfo(): void {
     this.storage.get('tokenInfo').then((data: TokenInfo) => {
       this.tokenInfo = data;
-    }).catch(err => {
-      alert(err);
     });
   }
 
   private getItems(): void {
     this.itemService.getItemList().then(data => {
       this.items = data;
-    }).catch(err => {
-      alert(err);
+    }).catch((err: ResponseData) => {
+      alert(err.code + ": " + err.data);
     });
   }
 
@@ -65,4 +64,11 @@ export class HomePage {
     }, 1000);
   }
   
+  refreshToken() {
+    this.authService.refreshToken().then((data:TokenInfo) => {
+      this.tokenInfo = data;
+    }).catch((err: ResponseData) => {
+      alert(err.code + ": " + err.data);
+    })
+  }
 }
