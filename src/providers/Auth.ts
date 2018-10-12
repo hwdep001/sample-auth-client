@@ -38,6 +38,15 @@ export class AuthProvider {
     return jwtInfo;
   }
 
+  async getBearerAuthorization(): Promise<string> {
+    const tokenInfo: TokenInfo = await this.storage.get('tokenInfo');
+    return 'Bearer ' + tokenInfo.accessToken;
+  }
+
+  private getBasicAuthorization(): string {
+    return 'Basic ' + btoa(EnvVariable.clientId + ":" + EnvVariable.clientSecret);
+  }
+
   signIn(reqTokenInfo: ReqTokenInfo): Promise<TokenInfo> {
     return new Promise<TokenInfo>((resolve, reject) => {
 
@@ -77,9 +86,6 @@ export class AuthProvider {
   private getToken(reqTokenInfo: ReqTokenInfo): Promise<TokenInfo> {
     return new Promise<TokenInfo>((resolve, reject) => {
 
-      reqTokenInfo.clientId = EnvVariable.clientId;
-      reqTokenInfo.clientSecret = EnvVariable.clientSecret;
-
       let reqData = new HttpParams()
         .set('grant_type', reqTokenInfo.grantType)
         
@@ -91,7 +97,7 @@ export class AuthProvider {
       }
 
       const reqHeaders = new HttpHeaders()
-        .set('Authorization', reqTokenInfo.getBasicAuthorization())
+        .set('Authorization', this.getBasicAuthorization())
         .set('Content-Type', 'application/x-www-form-urlencoded');
 
       this.http.post(`${this.reqAuthUrl}/oauth/token`, null,{

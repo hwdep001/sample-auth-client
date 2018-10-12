@@ -16,7 +16,6 @@ import { ItemProvider } from './../providers/Item';
 
 import { SignInPage } from './../pages/sign-in/sign-in';
 import { HomePage } from './../pages/home/home';
-import { ListPage } from './../pages/list/list';
 import { MyInfoPage } from './../pages/my-info/my-info';
 
 @NgModule({
@@ -24,7 +23,6 @@ import { MyInfoPage } from './../pages/my-info/my-info';
     MyApp,
     SignInPage,
     HomePage,
-    ListPage,
     MyInfoPage
   ],
   imports: [
@@ -39,7 +37,6 @@ import { MyInfoPage } from './../pages/my-info/my-info';
     MyApp,
     SignInPage,
     HomePage,
-    ListPage,
     MyInfoPage
   ],
   providers: [

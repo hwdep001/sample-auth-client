@@ -1,6 +1,6 @@
 export class Item {
 
-  name: string;
-  createDate: Date;
+  str1: string;
+  str2: string;
     
 }

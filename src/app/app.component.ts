@@ -6,7 +6,6 @@ import { Storage } from '@ionic/storage';
 
 import { SignInPage } from './../pages/sign-in/sign-in';
 import { HomePage } from './../pages/home/home';
-import { ListPage } from './../pages/list/list';
 import { MyInfoPage } from './../pages/my-info/my-info';
 
 import { TokenInfo } from './../models/TokenInfo';
@@ -61,7 +60,6 @@ export class MyApp {
       this.isSignedIn = true;
       this.pages = [
         { title: 'Home', component: HomePage },
-        { title: 'List', component: ListPage },
         { title: 'My info', component: MyInfoPage }
       ];
     }
