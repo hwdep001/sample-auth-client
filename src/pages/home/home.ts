@@ -44,7 +44,7 @@ export class HomePage {
     this.itemService.getItemList().then(data => {
       this.items = data;
     }).catch((err: ResponseData) => {
-      alert(err.code + ": " + err.data);
+      alert(err.code + ": " + err.msg);
     });
   }
 
@@ -68,7 +68,7 @@ export class HomePage {
     this.authService.refreshToken().then((data:TokenInfo) => {
       this.tokenInfo = data;
     }).catch((err: ResponseData) => {
-      alert(err.code + ": " + err.data);
+      alert(err.code + ": " + err.msg);
     })
   }
 }

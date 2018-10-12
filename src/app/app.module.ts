@@ -6,15 +6,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { MyApp } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PipesModule } from './PipesModule';
 
+// import { RequestInterceptorService } from './../providers/RequestInterceptor';
 import { CommonProvider } from './../providers/Common';
 import { AuthProvider } from './../providers/Auth';
 import { UserProvider } from './../providers/User';
 import { ItemProvider } from './../providers/Item';
 
 import { SignInPage } from './../pages/sign-in/sign-in';
+import { SignUpPage } from './../pages/sign-up/sign-up';
 import { HomePage } from './../pages/home/home';
 import { MyInfoPage } from './../pages/my-info/my-info';
 
@@ -22,6 +24,7 @@ import { MyInfoPage } from './../pages/my-info/my-info';
   declarations: [
     MyApp,
     SignInPage,
+    SignUpPage,
     HomePage,
     MyInfoPage
   ],
@@ -36,6 +39,7 @@ import { MyInfoPage } from './../pages/my-info/my-info';
   entryComponents: [
     MyApp,
     SignInPage,
+    SignUpPage,
     HomePage,
     MyInfoPage
   ],
@@ -43,6 +47,7 @@ import { MyInfoPage } from './../pages/my-info/my-info';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    // {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true },
     CommonProvider,
     AuthProvider,
     UserProvider,

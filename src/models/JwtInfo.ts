@@ -6,6 +6,8 @@ export class JwtInfo {
   authorities: string;
   scope: string;
   exp: number;
+  email: string;
+  phoneNumber: string;
 
   static fromData(payload: string): JwtInfo {
     const payloadJson = JSON.parse(payload);
@@ -17,6 +19,8 @@ export class JwtInfo {
     jwtInfo.authorities = payloadJson.authorities;
     jwtInfo.scope = payloadJson.scope;
     jwtInfo.exp = payloadJson.exp;
+    jwtInfo.email = payloadJson.email;
+    jwtInfo.phoneNumber = payloadJson.phoneNumber;
     return jwtInfo;
   }
   

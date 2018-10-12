@@ -11,16 +11,16 @@ export class ResponseData {
     let responseData = new this();
     responseData.res = errRes.ok;
     responseData.code = errRes.status;
-    responseData.msg = errRes.error.error;
-    responseData.data = errRes.error.error_description;
+    responseData.msg = errRes.error.error_description;
+    responseData.data = errRes.error.error;
     return responseData;
   }
 
-  static fromCodeAndData(code: number, data: any) {
+  static fromCodeAndData(code: number, msg: any) {
     let responseData = new this();
     responseData.res = false;
     responseData.code = code;
-    responseData.data = data;
+    responseData.msg = msg;
     return responseData;
   }
 

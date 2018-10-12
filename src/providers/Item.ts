@@ -28,9 +28,7 @@ export class ItemProvider {
       this.http.post(`${this.reqUrl}/item/list`, null,{
         headers: new HttpHeaders().set('Authorization', bearerAuthorization)
       })
-      .subscribe(data => {
-        const resData = data as ResponseData;
-
+      .subscribe((resData: ResponseData) => {
         if (resData.res == true) {
           resolve(resData.data as Array<Item>);
         } else {

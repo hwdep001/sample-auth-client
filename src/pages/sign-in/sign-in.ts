@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+
+import { SignUpPage } from './../sign-up/sign-up';
 
 import { CommonProvider } from './../../providers/Common';
 import { AuthProvider } from './../../providers/Auth';
@@ -15,6 +18,7 @@ export class SignInPage {
   public reqTokenInfo: ReqTokenInfo = new ReqTokenInfo();
 
   constructor(
+    private navCtrl: NavController,
     private authService: AuthProvider,
     private cmnService: CommonProvider
   ) {
@@ -33,8 +37,12 @@ export class SignInPage {
     this.authService.signIn(this.reqTokenInfo).then(tokenInfo => {
     }).catch((err: ResponseData) => {
       loader.dismiss();
-      alert(err.code + ": " + err.data);
+      alert(err.code + ": " + err.msg);
     });
+  }
+
+  moveToSignUp(): void {
+    this.navCtrl.push(SignUpPage);
   }
 
 }
