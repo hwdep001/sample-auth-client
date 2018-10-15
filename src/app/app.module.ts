@@ -9,7 +9,7 @@ import { MyApp } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PipesModule } from './PipesModule';
 
-// import { RequestInterceptorService } from './../providers/RequestInterceptor';
+import { RequestInterceptorService } from './../providers/RequestInterceptor';
 import { CommonProvider } from './../providers/Common';
 import { AuthProvider } from './../providers/Auth';
 import { UserProvider } from './../providers/User';
@@ -46,8 +46,8 @@ import { MyInfoPage } from './../pages/my-info/my-info';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    // {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true },
+    // {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true },
     CommonProvider,
     AuthProvider,
     UserProvider,

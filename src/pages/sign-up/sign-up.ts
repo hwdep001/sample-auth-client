@@ -39,9 +39,9 @@ export class SignUpPage {
     this.userService.signUp(this.user).then(() => {
       this.navCtrl.setRoot(SignInPage);
       loader.dismiss();
-    }).catch((err: ResponseData) => {
+    }).catch((err) => {
       loader.dismiss();
-      alert(err.code + ": " + err.msg);
+      alert(err);
     });
   }
 

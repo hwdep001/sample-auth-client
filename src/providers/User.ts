@@ -36,8 +36,8 @@ export class UserProvider {
         } else {
           reject(resData);
         }
-      }, (err: HttpErrorResponse) => {
-        reject(ResponseData.fromHttpErr(err));
+      }, (err) => {
+        reject(err);
       });
     });
   }

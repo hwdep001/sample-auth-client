@@ -18,6 +18,7 @@ export class HomePage {
   public items = new Array<Item>();
   public tokenExp: number;
   public isExpired: boolean = false;
+  private checkExpInterval;
 
   constructor(
     private storage: Storage,
@@ -27,24 +28,28 @@ export class HomePage {
     this.initData();
   }
 
+  ionViewWillLeave() {
+    clearInterval(this.checkExpInterval);
+  }
+
   initData(): void {    
+    clearInterval(this.checkExpInterval);
     this.getTokenInfo();
     this.getItems();
-    this.getTokenExp();
-    this.checkExp();
   }
 
   private getTokenInfo(): void {
     this.storage.get('tokenInfo').then((data: TokenInfo) => {
       this.tokenInfo = data;
+      this.getTokenExp();
     });
   }
 
   private getItems(): void {
     this.itemService.getItemList().then(data => {
       this.items = data;
-    }).catch((err: ResponseData) => {
-      alert(err.code + ": " + err.msg);
+    }).catch((err) => {
+      alert(err);
     });
   }
 
@@ -53,13 +58,18 @@ export class HomePage {
     let tokenDate: Date = new Date(0);
     tokenDate.setUTCSeconds(jtwInfo.exp);
     this.tokenExp = tokenDate.getTime();
+    this.checkExp();
   }
   
   private checkExp() {
-    let interval = setInterval(() => {
+    this.isExpired = false;
+    clearInterval(this.checkExpInterval);
+
+    this.checkExpInterval = setInterval(() => {
+      console.log("ckeckExp")
       if(new Date().getTime() > this.tokenExp) {
         this.isExpired = true;
-        clearInterval(interval);
+        clearInterval(this.checkExpInterval);
       }
     }, 1000);
   }
@@ -67,8 +77,9 @@ export class HomePage {
   refreshToken() {
     this.authService.refreshToken().then((data:TokenInfo) => {
       this.tokenInfo = data;
-    }).catch((err: ResponseData) => {
-      alert(err.code + ": " + err.msg);
+      this.getTokenExp();
+    }).catch((err) => {
+      alert(err);
     })
   }
 }

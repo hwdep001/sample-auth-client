@@ -35,9 +35,9 @@ export class SignInPage {
     loader.present();
 
     this.authService.signIn(this.reqTokenInfo).then(tokenInfo => {
-    }).catch((err: ResponseData) => {
+    }).catch((err) => {
       loader.dismiss();
-      alert(err.code + ": " + err.msg);
+      alert(err);
     });
   }
 

@@ -34,8 +34,8 @@ export class ItemProvider {
         } else {
           reject(resData);
         }
-      }, (err: HttpErrorResponse) => {
-        reject(ResponseData.fromHttpErr(err));
+      }, (err) => {
+        reject(err);
       });
     });
   }

@@ -67,7 +67,7 @@ export class AuthProvider {
         }).catch(() => {
           reject(ResponseData.fromCodeAndData(-1, 'Failed to save token info.'));
         });
-      }).catch((err:ResponseData) => {
+      }).catch((err) => {
         reject(err);
       });
     });
@@ -92,7 +92,7 @@ export class AuthProvider {
         }).catch(() => {
           reject(ResponseData.fromCodeAndData(-1, 'Failed to save token info.'));
         });
-      }).catch((err: ResponseData) => {
+      }).catch((err) => {
         reject(err);
       });
     });
@@ -125,8 +125,8 @@ export class AuthProvider {
       })
       .subscribe(data => {
         resolve(TokenInfo.fromData(JSON.stringify(data)));
-      }, (err: HttpErrorResponse)  => {
-        reject(ResponseData.fromHttpErr(err));
+      }, (err)  => {
+        reject(err);
       });
     });
   }
